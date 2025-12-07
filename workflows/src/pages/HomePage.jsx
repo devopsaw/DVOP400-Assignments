@@ -5,8 +5,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 function HomePage() {
 
   return (
+    
     <>
-
     <div>
         <meta charSet="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>

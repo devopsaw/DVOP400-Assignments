@@ -1,6 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+// import 'googleapis'
+
+function ForkingWorkflow() {
+
+  return (
+    <>
+
+
+    <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Forking Workflow in Git</title>
@@ -12,7 +20,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <style jsx>{`
       (function () {
         try {
           var stored = localStorage.getItem("theme");
@@ -28,8 +37,8 @@
           /* ignore */
         }
       })();
-    </script>
-    <style>
+    `}</style>
+    <style jsx>{`
       /* Light theme (default) */
       :root {
         --brand: #0d6efd;
@@ -213,15 +222,15 @@
           color: #111;
         }
       }
-    </style>
+    `}</style>
   </head>
   <body>
-    <!-- Primary navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Workflows</a>
+    {/* <!-- Primary navigation --> */}
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="/">Workflows</a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#mainNav"
@@ -229,40 +238,40 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="home.html">Home</a>
+        <div className="collapse navbar-collapse" id="mainNav">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <a className="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="centralized-workflow.html"
+            <li className="nav-item">
+              <a className="nav-link" href="/centralized-workflow"
                 >Centralized Workflow</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="gitflow-workflow.html"
+            <li className="nav-item">
+              <a className="nav-link" href="/gitflow-workflow"
                 >Gitflow Workflow</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="feature-branch-workflow.html"
+            <li className="nav-item">
+              <a className="nav-link" href="/feature-branch-workflow"
                 >Feature Branch Workflow</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="github-workflow.html"
+            <li className="nav-item">
+              <a className="nav-link" href="/github-workflow"
                 >GitHub Workflow</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="trunk-based-development.html"
+            <li className="nav-item">
+              <a className="nav-link" href="/trunk-based-development"
                 >Trunk-Based Development</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#"
                 >Forking Workflow</a
               >
             </li>
@@ -271,19 +280,19 @@
       </div>
     </nav>
 
-    <main class="doc-container" role="main">
-      <header class="d-flex flex-column mb-3">
-        <div class="d-flex justify-content-between align-items-start">
+    <main className="doc-container" role="main">
+      <header className="d-flex flex-column mb-3">
+        <div className="d-flex justify-content-between align-items-start">
           <div>
-            <h1 class="title">Forking Workflow in Git</h1>
-            <div class="subtitle">
+            <h1 className="title">Forking Workflow in Git</h1>
+            <div className="subtitle">
               A brief introduction to the Forking Workflow
             </div>
           </div>
           <div>
             <button
               id="theme-toggle"
-              class="btn btn-sm btn-outline-secondary"
+              className="btn btn-sm btn-outline-secondary"
               aria-pressed="false"
               title="Toggle theme"
             >
@@ -294,8 +303,8 @@
         <hr />
       </header>
 
-      <section class="intro mb-3">
-        <p class="lead">
+      <section className="intro mb-3">
+        <p className="lead">
           The Forking Workflow is a Git workflow where contributors create a
           personal copy/fork of a repository and commit updates and changes in
           their forked copy, rather than directly in the original repository. It
@@ -306,11 +315,11 @@
         </p>
       </section>
 
-      <div class="row g-3">
-        <aside class="col-12 col-md-4">
-          <nav class="toc">
+      <div className="row g-3">
+        <aside className="col-12 col-md-4">
+          <nav className="toc">
             <strong>Contents</strong>
-            <ol class="mt-2 mb-0 ps-3">
+            <ol className="mt-2 mb-0 ps-3">
               <li><a href="#when-to-use">When to use</a></li>
               <li><a href="#workflow-steps">Workflow steps</a></li>
               <li><a href="#commands">Example commands</a></li>
@@ -321,8 +330,8 @@
           </nav>
         </aside>
 
-        <article class="col-12 col-md-8">
-          <section id="when-to-use" class="section">
+        <article className="col-12 col-md-8">
+          <section id="when-to-use" className="section">
             <h2>When to use</h2>
             <p>
               Use the forking workflow when you want to work independently
@@ -336,7 +345,7 @@
             </ul>
           </section>
 
-          <section id="workflow-steps" class="section">
+          <section id="workflow-steps" className="section">
             <h2>Workflow steps</h2>
             <ol>
               <li>
@@ -360,7 +369,7 @@
             </ol>
           </section>
 
-          <section id="commands" class="section">
+          <section id="commands" className="section">
             <h2>Example commands</h2>
             <p>Common sequence (replace placeholders):</p>
             <pre><code>git clone git@github.com:your-username/repo-name.git
@@ -373,20 +382,20 @@ git commit -m "Short, descriptive message"
 git push origin feature/brief-description
 # then open a pull request on the hosting site
 </code></pre>
-            <p class="mt-2">
+            <p className="mt-2">
               <em>Tip:</em> Keep branches small and focused; the easier to
               review, the faster it merges.
             </p>
           </section>
 
-          <section id="visual" class="section">
+          <section id="visual" className="section">
             <h2>Example visuals</h2>
             <figure>
               <img
                 src="forking-assets/forking-workflow-example1.png"
                 alt="Visual representation of the forking workflow"
               />
-              <figcaption class="italic-text">
+              <figcaption className="italic-text">
                 From Tomasz Lisowski on GitProtect
               </figcaption>
             </figure>
@@ -396,7 +405,7 @@ git push origin feature/brief-description
                 src="forking-assets/forking-workflow-example2.png"
                 alt="Visual representation of the forking workflow"
               />
-              <figcaption class="italic-text">
+              <figcaption className="italic-text">
                 Derived from work Copyright (c)
                 <a
                   href="https://coderefinery.org"
@@ -408,7 +417,7 @@ git push origin feature/brief-description
             </figure>
           </section>
 
-          <section id="tips" class="section">
+          <section id="tips" className="section">
             <h2>Tips & best practices</h2>
             <ul>
               <li>
@@ -439,7 +448,7 @@ git push origin feature/brief-description
             </ul>
           </section>
 
-          <section id="references" class="section">
+          <section id="references" className="section">
             <h2>References</h2>
             <ul>
               <li>
@@ -484,13 +493,13 @@ git push origin feature/brief-description
         </article>
       </div>
 
-      <!-- <footer class="mt-4">
-        <div class="d-flex justify-content-between">
+      {/* <footer className="mt-4">
+        <div className="d-flex justify-content-between">
         </div>
-      </footer> -->
+      </footer> */}
     </main>
 
-    <script>
+    {/* <script>
       // Theme toggle logic: updates documentElement data-theme and saves to localStorage
       (function () {
         var toggle = function (next) {
@@ -507,11 +516,11 @@ git push origin feature/brief-description
           if (!btn || !label) return;
           if (theme === "dark") {
             btn.innerHTML = '🌙 <span id="theme-label">Dark</span>';
-            btn.className = "btn btn-sm btn-outline-light";
+            btn.classNameName = "btn btn-sm btn-outline-light";
             btn.setAttribute("aria-pressed", "true");
           } else {
             btn.innerHTML = '☀️ <span id="theme-label">Light</span>';
-            btn.className = "btn btn-sm btn-outline-secondary";
+            btn.classNameName = "btn btn-sm btn-outline-secondary";
             btn.setAttribute("aria-pressed", "false");
           }
         };
@@ -540,7 +549,13 @@ git push origin feature/brief-description
           }
         });
       })();
-    </script>
+    </script> */}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
-</html>
+
+
+    </>
+  )
+}
+
+export default ForkingWorkflow

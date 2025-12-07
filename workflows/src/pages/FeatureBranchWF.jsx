@@ -1,4 +1,3 @@
-import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
@@ -56,7 +55,7 @@ function FeatureBranchWF() {
                                     <a className="nav-link" href="/gitflow-workflow">Gitflow Workflow</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="/feature-branch-workflow">Feature Branch Workflow</a>
+                                    <a className="nav-link active" href="#">Feature Branch Workflow</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="/github-workflow">GitHub Workflow</a>
