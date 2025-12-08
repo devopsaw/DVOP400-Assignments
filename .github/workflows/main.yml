@@ -32,10 +32,11 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Setup the Docker Build
         uses: docker/setup-buildx-action@v3
-      - name: Push the image to repo
+      - name: Build and push the image to repo
         uses: docker/build-push-action@v6
         with:
-          contexts: .
+          context: ./workflows
+          file: ./workflows/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
