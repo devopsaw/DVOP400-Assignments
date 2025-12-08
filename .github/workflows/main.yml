@@ -39,5 +39,5 @@ jobs:
           file: ./workflows/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: rcoope/ryan-app:latest
           annotations: ${{ steps.meta.outputs.annotaions }}
