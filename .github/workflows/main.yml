@@ -11,9 +11,19 @@ on:
 jobs:
   build:
     env:
-      IMAGE_NAME: 'ryan-app'
+      IMAGE_NAME: 'devopsaw-app'
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+        with:
+          daemon-config: |
+            {
+              "debug": true,
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
       - name: Checkout repo
         uses: actions/checkout@v5
       - name: Setup image name
@@ -38,6 +48,7 @@ jobs:
           context: ./workflows
           file: ./workflows/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: rcoope/ryan-app:latest
+          load: true
+          push: true
+          tags: rcoope/devopsaw-app:latest
           annotations: ${{ steps.meta.outputs.annotaions }}
