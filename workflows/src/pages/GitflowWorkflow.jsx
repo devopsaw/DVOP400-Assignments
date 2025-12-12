@@ -34,12 +34,12 @@ function GitflowWorkflow() {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="/">
+            <a className="nav-link" href="./">
               Home
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/centralized-workflow">
+            <a className="nav-link" href="./centralized-workflow">
               Centralized Workflow
             </a>
           </li>
@@ -49,22 +49,22 @@ function GitflowWorkflow() {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/feature-branch-workflow">
+            <a className="nav-link" href="./feature-branch-workflow">
               Feature Branch Workflow
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/github-workflow">
+            <a className="nav-link" href="./github-workflow">
               GitHub Workflow
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/trunk-based-development">
+            <a className="nav-link" href="./trunk-based-development">
               Trunk-Based Development
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/forking-workflow">
+            <a className="nav-link" href="./forking-workflow">
               Forking Workflow
             </a>
           </li>

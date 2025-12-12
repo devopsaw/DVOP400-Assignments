@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
-function HomePage() {
+function TrunkBasedDev() {
 
   return (
     <>
@@ -22,7 +22,7 @@ function HomePage() {
     {/* Bootstrap navbar (bg-primary) */}
     <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="./">
             Home
         </a>
         <button
@@ -39,22 +39,22 @@ function HomePage() {
         <div className="collapse navbar-collapse" id="mainNav">
             <ul className="navbar-nav ms-auto mb-2 mb-md-0">
             <li className="nav-item">
-                <a className="nav-link" href="centralized-workflow">
+                <a className="nav-link" href="./centralized-workflow">
                 Centralized Workflow
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="gitflow-workflow">
+                <a className="nav-link" href="./gitflow-workflow">
                 Gitflow Workflow
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="feature-branch-workflow">
+                <a className="nav-link" href="./feature-branch-workflow">
                 Feature Branch Workflow
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="github-workflow">
+                <a className="nav-link" href="./github-workflow">
                 GitHub Workflow
                 </a>
             </li>
@@ -68,7 +68,7 @@ function HomePage() {
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="forking-workflow">
+                <a className="nav-link" href="./forking-workflow">
                 Forking Workflow
                 </a>
             </li>
@@ -144,4 +144,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default TrunkBasedDev
