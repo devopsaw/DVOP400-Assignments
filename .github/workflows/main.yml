@@ -21,7 +21,7 @@
 #    - CLUSTER_NAME (name of the resource to deploy to - fleet name or managed cluster name)
 #    - CLUSTER_RESOURCE_GROUP (where your cluster is deployed)
 #    - CLUSTER_RESOURCE_TYPE (type of resource to deploy to, either 'Microsoft.ContainerService/fleets' or 'Microsoft.ContainerService/managedClusters')
-#    - CONTAINER_NAME (name of the container image you would like to push up to your ACR)
+#    - CONTAINER_NAME (name of the container image you would like to  up to your ACR)
 #    - DEPLOYMENT_MANIFEST_PATH (path to the manifest yaml for your deployment)
 #    - DOCKER_FILE (path to your Dockerfile)
 #    - BUILD_CONTEXT_PATH (path to the context of your Dockerfile)
@@ -76,9 +76,9 @@ jobs:
           az acr login -n ${{ env.AZURE_CONTAINER_REGISTRY }}
 
       # Builds and pushes an image up to your Azure Container Registry
-      - name: Build and push image to ACR
-        run: |
-          az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ${{ env.DOCKER_FILE }} ${{ env.BUILD_CONTEXT_PATH }}
+      # - name: Build and push image to ACR
+      #  run: |
+      #    az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ${{ env.DOCKER_FILE }} ${{ env.BUILD_CONTEXT_PATH }}
   deploy:
     permissions:
       actions: read
@@ -160,8 +160,9 @@ jobs:
         with:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-          images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+          images: 'docker.io/rcoope/devopsaw-app:latest'
+          # images: |
+          #  ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
           name: ${{ env.CLUSTER_NAME }}
           private-cluster: ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER == 'true' }}
