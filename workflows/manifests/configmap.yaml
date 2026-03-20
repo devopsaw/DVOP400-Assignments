@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: main-config
-  namespace: sample-app-namespace-1773911298403
+#  namespace: sample-app-namespace-1773911298403
   labels:
     app.kubernetes.io/name: main
     kubernetes.azure.com/generator: devhub
