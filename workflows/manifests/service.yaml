@@ -9,7 +9,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app.kubernetes.io/name: main
+    docker.io/rcoope/devopsaw-app:latest
   ports:
     - protocol: TCP
       port: 80
