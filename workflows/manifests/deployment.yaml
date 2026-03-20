@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
         - name: main
-          image: registry1773912825129.azurecr.io/image-workflow-1773911298337:latest
+          # image: registry1773912825129.azurecr.io/image-workflow-1773911298337:latest
+          image: docker.io/rcoope/devopsaw-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
