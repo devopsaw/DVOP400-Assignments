@@ -47,7 +47,7 @@ env:
   DEPLOYMENT_MANIFEST_PATH: ./workflows/manifests
   DOCKER_FILE: ./workflows/Dockerfile
   BUILD_CONTEXT_PATH: ./workflows
-  NAMESPACE: sample-app-namespace-1773911298403
+  # NAMESPACE: sample-app-namespace-1773911298403
   ENABLENAMESPACECREATION: false
   AUTH_TYPE: SERVICE_PRINCIPAL
 
