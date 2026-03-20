@@ -39,7 +39,7 @@ on:
 
 env:
   ACR_RESOURCE_GROUP: aks-devopsaw-app
-  AZURE_CONTAINER_REGISTRY: registry1773912825129
+  # AZURE_CONTAINER_REGISTRY: registry1773912825129
   CONTAINER_NAME: image-workflow-1773911298337
   CLUSTER_NAME: aks-devopsaw-app
   CLUSTER_RESOURCE_GROUP: aks-devopsaw-app
