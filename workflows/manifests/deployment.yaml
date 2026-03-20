@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: main
     kubernetes.azure.com/generator: devhub
-  namespace: sample-app-namespace-1773911298403
+  # namespace: sample-app-namespace-1773911298403
 spec:
   replicas: 2
   selector:
