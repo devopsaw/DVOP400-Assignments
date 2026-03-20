@@ -1,11 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: main
+  name: devopsaw-app
   # namespace: sample-app-namespace-1773911298403
-  labels:
-    app.kubernetes.io/name: main
-    kubernetes.azure.com/generator: devhub
+  # labels:
+  #  app.kubernetes.io/name: main
+  #  kubernetes.azure.com/generator: devhub
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    
 spec:
   type: LoadBalancer
   selector:
