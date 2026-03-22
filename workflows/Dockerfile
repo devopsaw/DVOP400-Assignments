@@ -1,11 +1,13 @@
-FROM node:22
-ENV PORT 3000
-EXPOSE 3000
+FROM node:24.11.1-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
+
 COPY package.json .
+
 RUN npm install
+
 COPY . .
 
-CMD ["npm", "run", "dev"]
+EXPOSE 8080
+
+CMD [ "npm", "run", "dev" ]
