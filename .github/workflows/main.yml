@@ -10,11 +10,11 @@ on:
   workflow_dispatch:
 
 env:
-  # ACR_RESOURCE_GROUP: aksdeploy
+  # ACR_RESOURCE_GROUP: aksdeploys
   # AZURE_CONTAINER_REGISTRY: registry1773912825129
   # CONTAINER_NAME: image-workflow-1773911298337
-  CLUSTER_NAME: aksdeployapp
-  CLUSTER_RESOURCE_GROUP: aksdeploy
+  CLUSTER_NAME: aksdeploysapp
+  CLUSTER_RESOURCE_GROUP: aksdeploys
   CLUSTER_RESOURCE_TYPE: Microsoft.ContainerService/managedClusters
   DEPLOYMENT_MANIFEST_PATH: ./manifests
   DOCKER_FILE: ./Dockerfile
