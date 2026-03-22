@@ -46,8 +46,8 @@ jobs:
       - name: Build and push the image to repo
         uses: docker/build-push-action@v6
         with:
-          context: ./workflows
-          file: ./workflows/Dockerfile
+          context: ./
+          file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           load: true
           push: true
