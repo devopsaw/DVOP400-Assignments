@@ -7,8 +7,41 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+
+env:
+  # ACR_RESOURCE_GROUP: aksdeploy
+  # AZURE_CONTAINER_REGISTRY: registry1773912825129
+  # CONTAINER_NAME: image-workflow-1773911298337
+  CLUSTER_NAME: aksdeployapp
+  CLUSTER_RESOURCE_GROUP: aksdeploy
+  CLUSTER_RESOURCE_TYPE: Microsoft.ContainerService/managedClusters
+  DEPLOYMENT_MANIFEST_PATH: ./manifests
+  DOCKER_FILE: ./Dockerfile
+  BUILD_CONTEXT_PATH: .
+  # NAMESPACE: sample-app-namespace-1773911298403
+  ENABLENAMESPACECREATION: false
+  AUTH_TYPE: SERVICE_PRINCIPAL
 
 jobs:
+  # buildImage:
+  #   permissions:
+  #     contents: read
+  #     id-token: write
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checks out the repository this file is in
+  #     - uses: actions/checkout@v3
+
+  #     # Logs in with your Azure credentials
+  #     - name: Azure login
+  #       uses: azure/login@v2.2.0
+  #       with:
+  #         client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #         auth-type: ${{ env.AUTH_TYPE }}
+
   build:
     env:
       IMAGE_NAME: "devopsaw-app"
@@ -53,3 +86,92 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           annotations: ${{ steps.meta.outputs.annotaions }}
+
+  deploy:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: [buildImage]
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v2.2.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: ${{ env.AUTH_TYPE }}
+
+      # Use kubelogin to configure your kubeconfig for Azure auth
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: "v0.0.25"
+
+      # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
+      - name: Get K8s context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          admin: "false"
+          use-kubelogin: "true"
+          resource-type: ${{ env.CLUSTER_RESOURCE_TYPE }}
+
+      # Checks if the AKS cluster is private
+      - name: Is private cluster
+        if: ${{ env.CLUSTER_RESOURCE_TYPE != 'Microsoft.ContainerService/fleets' }}
+        id: isPrivate
+        run: |
+          result=$(az aks show --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --query "apiServerAccessProfile.enablePrivateCluster")
+          echo "PRIVATE_CLUSTER=$result" >> "$GITHUB_OUTPUT"
+
+      # Create Namespace
+      # - name: Create Namespace
+      #  if: ${{ env.ENABLENAMESPACECREATION == 'true' }}
+      #  run: |
+      #    if [ ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER}} == 'true' ]; then
+      #      command_id=$(az aks command invoke --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command "kubectl get namespace ${{ env.NAMESPACE }} || kubectl create namespace ${{ env.NAMESPACE }}" --query id -o tsv)
+      #      result=$(az aks command result --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command-id $command_id)
+      #      echo "Command Result: $result"
+      #      exitCode=$(az aks command result --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command-id $command_id --query exitCode -o tsv)
+      #      if [ $exitCode -ne 0 ]; then
+      #        exit $exitCode
+      #      fi
+      #    else
+      #      kubectl get namespace ${{ env.NAMESPACE }} || kubectl create namespace ${{ env.NAMESPACE }}
+      #    fi
+      # Validate Namespace exists
+      # - name: Validate Namespace Exists
+      #  run: |
+      #    if [ ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER}} == 'true' ]; then
+      #      command_id=$(az aks command invoke --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command "kubectl get namespace ${{ env.NAMESPACE }}" --query id -o tsv)
+      #      result=$(az aks command result --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command-id $command_id)
+      #      echo "Command Result: $result"
+      #      exitCode=$(az aks command result --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --command-id $command_id --query exitCode -o tsv)
+      #      if [ $exitCode -ne 0 ]; then
+      #        exit $exitCode
+      #      fi
+      #    else
+      #      kubectl get namespace ${{ env.NAMESPACE }}
+      #    fi
+      # Deploys application based on given manifest  file
+      - name: Deploys application
+        uses: Azure/k8s-deploy@v5
+        with:
+          action: deploy
+          manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          images: "docker.io/rcoope/devopsaw-app:latest"
+          # images: |
+          #  ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+          name: ${{ env.CLUSTER_NAME }}
+          private-cluster: ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER == 'true' }}
+          #  namespace: ${{ env.NAMESPACE }}
+          resource-type: ${{ env.CLUSTER_RESOURCE_TYPE }}
+        #  annotate-namespace: ${{ env.CLUSTER_RESOURCE_TYPE != 'Microsoft.ContainerService/fleets' }}
