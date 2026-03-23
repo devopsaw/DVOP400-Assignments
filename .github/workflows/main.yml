@@ -196,4 +196,4 @@ jobs:
         # Apply Kubernetes manifests
       - name: Kubectl apply
         run: |
-          kubectl apply -f service.yaml
+          kubectl apply -f deplyment.yaml
