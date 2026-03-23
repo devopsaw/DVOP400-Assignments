@@ -193,7 +193,3 @@ jobs:
           #  namespace: ${{ env.NAMESPACE }}
           resource-type: ${{ env.CLUSTER_RESOURCE_TYPE }}
         #  annotate-namespace: ${{ env.CLUSTER_RESOURCE_TYPE != 'Microsoft.ContainerService/fleets' }}
-        # Apply Kubernetes manifests
-      - name: Kubectl apply
-        run: |
-          kubectl apply -f ./manifests/deployment.yaml
