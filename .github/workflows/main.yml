@@ -55,7 +55,7 @@ jobs:
   build:
     env:
       IMAGE_NAME: "devopsaw-app"
-      IMAGE_TAG: ${{ github.sha }}
+      IMAGE_TAG: ${{ latest }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker
