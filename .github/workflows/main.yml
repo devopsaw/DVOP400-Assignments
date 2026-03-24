@@ -177,7 +177,7 @@ jobs:
       # Modify manifest with new unique image tag
       - name: Apply tag
         run: |
-          envsubst < ../manifests/deployment.template.yaml > ../manifests/deployment.yaml
+          envsubst < ../../manifests/deployment.template.yaml > ../../manifests/deployment.yaml
 
       # Deploys application based on given manifest file
       - name: Deploys application
