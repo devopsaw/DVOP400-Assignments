@@ -50,12 +50,13 @@ env:
   NAMESPACE: default
   ENABLENAMESPACECREATION: false
   AUTH_TYPE: SERVICE_PRINCIPAL
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   build:
     env:
       IMAGE_NAME: "devopsaw-app"
-      IMAGE_TAG: "latest"
+      IMAGE_TAG: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker
@@ -179,7 +180,7 @@ jobs:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            docker.io/rcoope/devopsaw-app:${{ env.IMAGE_TAG }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
           name: ${{ env.CLUSTER_NAME }}
           private-cluster: ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER == 'true' }}
