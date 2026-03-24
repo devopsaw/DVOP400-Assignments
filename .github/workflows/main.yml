@@ -50,15 +50,16 @@ env:
   NAMESPACE: default
   ENABLENAMESPACECREATION: false
   AUTH_TYPE: SERVICE_PRINCIPAL
-  IMG_TAG: ${{ github.sha }}
 
 jobs:
   build:
     env:
       IMAGE_NAME: "devopsaw-app"
-      IMAGE_TAG: ${{ env.IMG_TAG }}
+      IMAGE_TAG: ${{ github.sha }}
     runs-on: ubuntu-latest
     steps:
+      - name: Setup image env tag
+        run: echo "IMAGE_TAG=${{ IMAGE_TAG }}" >> $GITHUB_ENV
       - name: Set up Docker
         uses: docker/setup-docker-action@v4
         with:
@@ -95,7 +96,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           load: true
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMG_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           annotations: ${{ steps.meta.outputs.annotaions }}
 
   deploy:
@@ -185,7 +186,7 @@ jobs:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            docker.io/rcoope/devopsaw-app:${{ env.IMG_TAG }}
+            docker.io/rcoope/devopsaw-app:${{ env.IMAGE_TAG }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
           name: ${{ env.CLUSTER_NAME }}
           private-cluster: ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER == 'true' }}
