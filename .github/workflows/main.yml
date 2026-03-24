@@ -73,7 +73,7 @@ jobs:
       - name: Setup image name
         run: echo "IMAGE_NAME=${{ vars.DOCKERHUB_USERNAME }}/${{env.IMAGE_NAME}}" >> $GITHUB_ENV
       - name: Setup image env tag
-        run: echo "IMAGE_TAG=${{ IMAGE_TAG }}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=${{ env.IMAGE_TAG }}" >> $GITHUB_ENV
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
