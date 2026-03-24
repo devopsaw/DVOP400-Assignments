@@ -50,13 +50,13 @@ env:
   NAMESPACE: default
   ENABLENAMESPACECREATION: false
   AUTH_TYPE: SERVICE_PRINCIPAL
-  IMAGE_TAG: ${{ github.sha }}
+  IMG_TAG: ${{ github.sha }}
 
 jobs:
   build:
     env:
       IMAGE_NAME: "devopsaw-app"
-      IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      IMAGE_TAG: ${{ env.IMG_TAG }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker
@@ -95,7 +95,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           load: true
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMG_TAG }}
           annotations: ${{ steps.meta.outputs.annotaions }}
 
   deploy:
@@ -173,14 +173,19 @@ jobs:
             kubectl get namespace ${{ env.NAMESPACE }}
           fi
 
-      # Deploys application based on given manifest  file
+      # Modify manifest with new unique image tag
+      - name: Apply tag
+        run: |
+          envsubst < ../manifests/deployment.template.yaml > ../manifests/deployment.yaml
+
+      # Deploys application based on given manifest file
       - name: Deploys application
         uses: Azure/k8s-deploy@v5
         with:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            docker.io/rcoope/devopsaw-app:${{ env.IMAGE_TAG }}
+            docker.io/rcoope/devopsaw-app:${{ env.IMG_TAG }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
           name: ${{ env.CLUSTER_NAME }}
           private-cluster: ${{ steps.isPrivate.outputs.PRIVATE_CLUSTER == 'true' }}

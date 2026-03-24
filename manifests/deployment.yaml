@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: docker.io/rcoope/devopsaw-app:latest
+          image: docker.io/rcoope/devopsaw-app:${{ env.IMG_TAG }}
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -78,12 +78,12 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: main
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: main
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
