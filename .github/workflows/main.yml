@@ -51,8 +51,13 @@ env:
   ENABLENAMESPACECREATION: false
   AUTH_TYPE: SERVICE_PRINCIPAL
 
+permissions:
+  contents: write
+
 jobs:
   build:
+    permissions:
+      contents: write
     env:
       IMAGE_NAME: "devopsaw-app"
       # IMAGE_TAG: ${{ github.sha }}
