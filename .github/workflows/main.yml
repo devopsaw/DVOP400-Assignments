@@ -88,9 +88,10 @@ jobs:
           # The 'sed' command replaces the old image tag with the new unique tag
           # Replace 'your-docker-username/your-image-name:latest' with your actual image reference placeholder
           # Replace 'k8s/deployment.yaml' with the path to your deployment file
-          sed -i "s|rcoope/devopsaw-app:latest|${{ steps.meta.outputs.tags }}|g" manifests/deployment.yaml
+          sed -i "s|rcoope/devopsaw-app:.*|${{ steps.meta.outputs.tags }}|g" manifests/deployment.yaml
 
           # View the changes to confirm
+          echo "${{ steps.meta.outputs.tags }}"
           cat manifests/deployment.yaml
       - name: Commit and push the updated deployment file
         # This step commits the modified deployment file back to the repository
@@ -100,6 +101,8 @@ jobs:
           git add manifests/deployment.yaml
           git commit -m "Update image tag in deployment to ${{ steps.meta.outputs.tags }}" || echo "No changes to commit"
           git push
+          # View the changes to confirm
+          cat manifests/deployment.yaml
       # - name: Setup image name
       #   run: echo "IMAGE_NAME=${{ vars.DOCKERHUB_USERNAME }}/${{env.IMAGE_NAME}}" >> $GITHUB_ENV
       # - name: Setup image env tag
@@ -211,8 +214,8 @@ jobs:
       - name: Apply tag
         run: |
 
-      # envsubst < manifests/deployment.template.yaml > manifests/deployment.yaml.tmp
-      # mv manifests/deployment.yaml.tmp manifests/deployment.yaml
+      - name: Check deployment file
+        run: cat ${{ env.DEPLOYMENT_MANIFEST_PATH }}/deployment.yaml
 
       # Deploys application based on given manifest file
       - name: Deploys application
