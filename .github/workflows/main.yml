@@ -83,6 +83,23 @@ jobs:
             type=sha,format=short
       - name: Checkout repo
         uses: actions/checkout@v5
+      - name: Update Kubernetes deployment file
+        run: |
+          # The 'sed' command replaces the old image tag with the new unique tag
+          # Replace 'your-docker-username/your-image-name:latest' with your actual image reference placeholder
+          # Replace 'k8s/deployment.yaml' with the path to your deployment file
+          sed -i "s|rcoope/devopsaw-app:latest|${{ steps.meta.outputs.tags }}|g" manifests/deployment.yaml
+
+          # View the changes to confirm
+          cat manifests/deployment.yaml
+      - name: Commit and push the updated deployment file
+        # This step commits the modified deployment file back to the repository
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add manifests/deployment.yaml
+          git commit -m "Update image tag in deployment to ${{ steps.meta.outputs.tags }}" || echo "No changes to commit"
+          git push
       # - name: Setup image name
       #   run: echo "IMAGE_NAME=${{ vars.DOCKERHUB_USERNAME }}/${{env.IMAGE_NAME}}" >> $GITHUB_ENV
       # - name: Setup image env tag
@@ -114,24 +131,6 @@ jobs:
           #   ${{ vars.DOCKER_USERNAME }}/${{ IMAGE_NAME }}}
           tags: ${{ steps.meta.outputs.tags }}
           annotations: ${{ steps.meta.outputs.annotaions }}
-      - name: Update Kubernetes deployment file
-        run: |
-          # The 'sed' command replaces the old image tag with the new unique tag
-          # Replace 'your-docker-username/your-image-name:latest' with your actual image reference placeholder
-          # Replace 'k8s/deployment.yaml' with the path to your deployment file
-          sed -i "s|rcoope/devopsaw-app:latest|${{ steps.meta.outputs.tags }}|g" manifests/deployment.yaml
-
-          # View the changes to confirm
-          cat manifests/deployment.yaml
-
-      - name: Commit and push the updated deployment file
-        # This step commits the modified deployment file back to the repository
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add manifests/deployment.yaml
-          git commit -m "Update image tag in deployment to ${{ steps.meta.outputs.tags }}" || echo "No changes to commit"
-          git push
 
   deploy:
     permissions:
