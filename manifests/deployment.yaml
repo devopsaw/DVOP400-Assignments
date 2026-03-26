@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: docker.io/rcoope/devopsaw-app:sha-1a6b7eb
+          image: docker.io/rcoope/devopsaw-app:sha-c465114
           imagePullPolicy: Always
           ports:
             - containerPort: 80
